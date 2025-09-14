@@ -249,10 +249,7 @@ export default function BlogGeneratorPage() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg">Posts</CardTitle>
-                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                    <Plus className="w-4 h-4 mr-2" />
-                    New Post
-                  </Button>
+
                 </div>
                 <div className="flex items-center space-x-2">
                   <Filter className="w-4 h-4 text-gray-400" />
@@ -317,10 +314,7 @@ export default function BlogGeneratorPage() {
                   <Edit3 className="w-4 h-4 mr-2" />
                   Editor
                 </TabsTrigger>
-                <TabsTrigger value="appearance" className="data-[state=active]:bg-gray-800">
-                  <Palette className="w-4 h-4 mr-2" />
-                  Appearance
-                </TabsTrigger>
+
               </TabsList>
 
               {/* Editor Tab */}
@@ -413,42 +407,7 @@ export default function BlogGeneratorPage() {
                       <Label htmlFor="post-content">Content</Label>
                       {editorMode === "edit" ? (
                         <div className="space-y-3">
-                          {/* Formatting Toolbar */}
-                          <div className="flex items-center space-x-2 p-3 bg-gray-800 rounded-lg border border-gray-700">
-                            <Button variant="ghost" size="sm">
-                              <strong>B</strong>
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              <em>I</em>
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              <u>U</u>
-                            </Button>
-                            <Separator orientation="vertical" className="h-6" />
-                            <Button variant="outline" size="sm" onClick={handleSave} disabled={!selectedPost}>
-                              <Save className="w-4 h-4 mr-2" />
-                              Save
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              H1
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              H2
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              H3
-                            </Button>
-                            <Separator orientation="vertical" className="h-6" />
-                            <Button variant="ghost" size="sm">
-                              Link
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              Image
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              List
-                            </Button>
-                          </div>
+
                           <Textarea
                             id="blog-content"
                             placeholder="Start writing your amazing blog post..."
@@ -518,10 +477,7 @@ export default function BlogGeneratorPage() {
                           <Save className="w-4 h-4 mr-2" />
                           Save
                         </Button>
-                        <Button variant="outline" className="border-gray-700 bg-transparent">
-                          <Calendar className="w-4 h-4 mr-2" />
-                          Schedule
-                        </Button>
+
                       </div>
                       <Button className="bg-blue-600 hover:bg-blue-700" onClick={async () => {
                          if (!generatedBlog) return;
@@ -580,161 +536,7 @@ export default function BlogGeneratorPage() {
                 </Card>
               </TabsContent>
 
-              {/* Appearance Tab */}
-              <TabsContent value="appearance" className="space-y-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Theme Controls */}
-                  <Card className="bg-gray-900/50 border-gray-800">
-                    <CardHeader>
-                      <CardTitle className="flex items-center">
-                        <Palette className="w-5 h-5 mr-2" />
-                        Theme Customization
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      {/* Color Pickers */}
-                      <div className="space-y-4">
-                        <div>
-                          <Label className="text-sm font-medium">Primary Color</Label>
-                          <div className="flex items-center space-x-3 mt-2">
-                            <div className="w-10 h-10 bg-blue-600 rounded-lg border border-gray-700"></div>
-                            <Input
-                              type="color"
-                              defaultValue="#2563eb"
-                              className="w-20 h-10 bg-gray-800 border-gray-700"
-                            />
-                            <span className="text-sm text-gray-400">#2563eb</span>
-                          </div>
-                        </div>
 
-                        <div>
-                          <Label className="text-sm font-medium">Secondary Color</Label>
-                          <div className="flex items-center space-x-3 mt-2">
-                            <div className="w-10 h-10 bg-gray-600 rounded-lg border border-gray-700"></div>
-                            <Input
-                              type="color"
-                              defaultValue="#4b5563"
-                              className="w-20 h-10 bg-gray-800 border-gray-700"
-                            />
-                            <span className="text-sm text-gray-400">#4b5563</span>
-                          </div>
-                        </div>
-
-                        <div>
-                          <Label className="text-sm font-medium">Accent Color</Label>
-                          <div className="flex items-center space-x-3 mt-2">
-                            <div className="w-10 h-10 bg-green-600 rounded-lg border border-gray-700"></div>
-                            <Input
-                              type="color"
-                              defaultValue="#059669"
-                              className="w-20 h-10 bg-gray-800 border-gray-700"
-                            />
-                            <span className="text-sm text-gray-400">#059669</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Font Selection */}
-                      <div className="space-y-4">
-                        <div>
-                          <Label className="text-sm font-medium">Heading Font</Label>
-                          <Select defaultValue="inter">
-                            <SelectTrigger className="mt-2 bg-gray-800 border-gray-700">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="inter">Inter</SelectItem>
-                              <SelectItem value="roboto">Roboto</SelectItem>
-                              <SelectItem value="opensans">Open Sans</SelectItem>
-                              <SelectItem value="lato">Lato</SelectItem>
-                              <SelectItem value="montserrat">Montserrat</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div>
-                          <Label className="text-sm font-medium">Body Font</Label>
-                          <Select defaultValue="system">
-                            <SelectTrigger className="mt-2 bg-gray-800 border-gray-700">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="system">System UI</SelectItem>
-                              <SelectItem value="inter">Inter</SelectItem>
-                              <SelectItem value="roboto">Roboto</SelectItem>
-                              <SelectItem value="opensans">Open Sans</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-
-                      {/* Layout Options */}
-                      <div className="space-y-4">
-                        <Label className="text-sm font-medium">Layout Options</Label>
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="p-3 bg-gray-800 rounded-lg border border-gray-700 cursor-pointer hover:border-blue-500">
-                            <div className="aspect-video bg-gray-700 rounded mb-2"></div>
-                            <p className="text-xs text-center">Wide Layout</p>
-                          </div>
-                          <div className="p-3 bg-gray-800 rounded-lg border border-blue-500 cursor-pointer">
-                            <div className="aspect-video bg-gray-700 rounded mb-2 mx-2"></div>
-                            <p className="text-xs text-center">Centered</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Live Preview */}
-                  <Card className="bg-gray-900/50 border-gray-800">
-                    <CardHeader>
-                      <CardTitle className="flex items-center justify-between">
-                        <span className="flex items-center">
-                          <Eye className="w-5 h-5 mr-2" />
-                          Live Preview
-                        </span>
-                        <div className="flex items-center space-x-2">
-                          <Button
-                            variant={mobilePreview ? "outline" : "default"}
-                            size="sm"
-                            onClick={() => setMobilePreview(false)}
-                          >
-                            <Monitor className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant={mobilePreview ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => setMobilePreview(true)}
-                          >
-                            <Smartphone className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className={`bg-white rounded-lg overflow-hidden ${mobilePreview ? "max-w-sm mx-auto" : ""}`}>
-                        <div className="h-64 bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center">
-                          <div className="text-center text-white">
-                            <h1 className="text-2xl font-bold mb-2">Your Blog</h1>
-                            <p className="text-blue-100">Live preview of your customizations</p>
-                          </div>
-                        </div>
-                        <div className="p-6">
-                          <h2 className="text-xl font-bold text-gray-900 mb-3">Sample Blog Post</h2>
-                          <p className="text-gray-600 mb-4">
-                            This is how your blog posts will look with the current theme settings.
-                          </p>
-                          <div className="flex items-center space-x-4 text-sm text-gray-500">
-                            <span>Jan 15, 2024</span>
-                            <span>•</span>
-                            <span>5 min read</span>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
 
               {/* Analytics Tab */}
               <TabsContent value="analytics" className="space-y-6">
