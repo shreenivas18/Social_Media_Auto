@@ -37,15 +37,22 @@ export default function LinkedInGeneratorPage() {
     
     setIsPosting(true);
     setPostStatus(null);
+
+    const payload = {
+      text: "Hi"
+    };
+  
+    // Add this line to see what you are sending!
+    console.log('Sending this payload to the API:', JSON.stringify(payload));
     
     try {
-      const response = await fetch('https://spmsuccess.app.n8n.cloud/webhook/auto-linkedin', {
+      const response = await fetch('https://leftbsenn8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/linkedin/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          linkedpost: postContent.replace(/<[^>]+>/g, '') // Remove HTML tags
+          text: postContent.replace(/<[^>]+>/g, '') // Remove HTML tags
         }),
       });
 
