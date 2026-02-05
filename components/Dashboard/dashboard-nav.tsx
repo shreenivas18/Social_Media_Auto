@@ -19,7 +19,7 @@ const navItems = [
   { name: "Dashboard", href: "/dashboard" },
   { name: "Blog", href: "/dashboard/generate/blog" },
   { name: "LinkedIn", href: "/dashboard/generate/linkedin" },
-  { name: "Video", href: "/dashboard/generate/video" },
+  { name: "Twitter", href: "/dashboard/generate/twitter" },
 ];
 
 export default function DashboardNav() {

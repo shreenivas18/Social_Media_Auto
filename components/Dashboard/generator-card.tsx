@@ -6,7 +6,7 @@ interface CardProps {
   title: string;
   description: string;
   imageUrl: string;
-  hoverTheme: 'blog' | 'linkedin' | 'video';
+  hoverTheme: 'blog' | 'linkedin' | 'twitter';
 }
 
 export default function GeneratorCard({ tag, title, description, imageUrl, hoverTheme }: CardProps) {
@@ -21,10 +21,10 @@ export default function GeneratorCard({ tag, title, description, imageUrl, hover
       tag: 'group-hover:text-sky-200 group-hover:border-sky-300/60',
       button: 'group-hover:text-sky-300 group-hover:border-sky-300/60',
     },
-    video: {
-      bg: 'group-hover:bg-rose-900/70',
-      tag: 'group-hover:text-rose-200 group-hover:border-rose-300/60',
-      button: 'group-hover:text-rose-300 group-hover:border-rose-300/60',
+    twitter: {
+      bg: 'group-hover:bg-sky-900/70',
+      tag: 'group-hover:text-sky-200 group-hover:border-sky-300/60',
+      button: 'group-hover:text-sky-300 group-hover:border-sky-300/60',
     }
   };
 
@@ -37,9 +37,11 @@ export default function GeneratorCard({ tag, title, description, imageUrl, hover
             <Image
               src={imageUrl}
               alt={title}
-              layout="fill"
-              objectFit="cover"
+              fill
+              sizes="(max-width: 768px) 100vw, 320px"
+              style={{ objectFit: 'cover' }}
               className="group-hover:scale-105 transition-transform duration-300"
+              priority={false}
             />
           </div>
         </div>
@@ -53,7 +55,7 @@ export default function GeneratorCard({ tag, title, description, imageUrl, hover
           <div className="flex justify-between items-center">
             <span className={`text-indigo-400 transition flex items-center text-xs font-medium glass px-3 py-1.5 rounded-lg border border-indigo-400/30 transition-colors duration-300 ${currentTheme.button}`}>
               Generate
-              <svg className="w-3 h-3 ml-1" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg className="w-3 h-3 ml-1" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /></svg>
             </span>
             <span className="text-white/50 text-xs glass px-2 py-1 rounded-full border border-white/10">AI</span>
           </div>

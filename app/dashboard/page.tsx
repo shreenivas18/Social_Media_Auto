@@ -35,12 +35,12 @@ export default function DashboardPage() {
       hoverTheme: 'linkedin' as const,
     },
     {
-      tag: "Media",
-      title: "Video Generator",
-      description: "Create scripts for Instagram Reels and YouTube Shorts.",
-      href: "/dashboard/generate/video",
-      imageUrl: "/video.jpg",
-      hoverTheme: 'video' as const,
+      tag: "Social",
+      title: "Twitter Generator",
+      description: "Create engaging tweets with AI-powered hashtags.",
+      href: "/dashboard/generate/twitter",
+      imageUrl: "/twitter.jpg",
+      hoverTheme: 'twitter' as const,
     },
   ];
 

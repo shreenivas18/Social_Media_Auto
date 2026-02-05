@@ -8,7 +8,7 @@ const nextConfig = {
   },
   images: {
     domains: ["placeholder.svg"],
-    unoptimized: true,
+    unoptimized: false,
   },
 }
 

@@ -103,7 +103,7 @@ export default function BlogGeneratorPage() {
     }
   }, [generatedBlog]);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchContent = async () => {
       if (!selectedPost) {
         setEditorTitle('');
@@ -152,12 +152,12 @@ export default function BlogGeneratorPage() {
       alert(`Error publishing post: ${error.message}`);
     } else {
       alert("Post published successfully!");
-      
+
       const updatedPost = { ...selectedPost, status: 'published' as const };
 
       setBlogPosts(blogPosts.map(p => p.id === selectedPost.id ? updatedPost : p));
       setSelectedPost(updatedPost);
-      
+
       console.log('Post published successfully');
     }
   };
@@ -197,7 +197,7 @@ export default function BlogGeneratorPage() {
     <div className="min-h-screen bg-gray-950 text-white">
       {/* Research input */}
       <div className="max-w-7xl mx-auto px-6 py-6">
-        <ResearchGather onBlogGenerated={setGeneratedBlog} />
+        <ResearchGather onBlogGenerated={setGeneratedBlog} showVisitSiteButton={false} />
 
 
       </div>
@@ -207,107 +207,20 @@ export default function BlogGeneratorPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <h1 className="text-2xl font-bold">Blog Dashboard</h1>
-              <Badge variant="outline" className="text-green-400 border-green-400">
-                <Globe className="w-3 h-3 mr-1" />
-                yourname.aicontentteam.com
-              </Badge>
+              {/* Hidden: Domain badge - logic preserved but not rendered */}
             </div>
-            <div className="flex items-center space-x-3">
-              <Button variant="default" size="sm" onClick={handlePublish} disabled={!selectedPost || selectedPost.status === 'published'}>
-                <Send className="w-4 h-4 mr-2" />
-                {selectedPost?.status === 'published' ? 'Published' : 'Publish'}
-              </Button>
-              {selectedPost ? (
-                <a
-                  href={`/public/${selectedPost.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Visit Live Site
-                  </Button>
-                </a>
-              ) : (
-                <Button size="sm" className="bg-blue-600 hover:bg-blue-700" disabled>
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Visit Live Site
-                </Button>
-              )}
-            </div>
+            {/* Hidden: Visit Live Site buttons - logic preserved but not rendered */}
           </div>
         </div>
       </div>
 
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Post Selection Sidebar */}
-          <div className="lg:col-span-1">
-            <Card className="bg-gray-900/50 border-gray-800">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">Posts</CardTitle>
+        <div className="grid grid-cols-1 gap-6">
+          {/* Hidden: Post Selection Sidebar - logic preserved but not rendered */}
 
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Filter className="w-4 h-4 text-gray-400" />
-                  <Select defaultValue="all">
-                    <SelectTrigger className="w-full bg-gray-800 border-gray-700">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Posts</SelectItem>
-                      <SelectItem value="published">Published</SelectItem>
-                      <SelectItem value="draft">Drafts</SelectItem>
-                      <SelectItem value="scheduled">Scheduled</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="space-y-2">
-                  {blogPosts.map((post) => (
-                    <div
-                      key={post.id}
-                      className={`p-4 cursor-pointer transition-colors ${
-                        selectedPost?.id === post.id
-                          ? "bg-blue-600/20 border-l-4 border-blue-600"
-                          : "hover:bg-gray-800/50"
-                      }`}
-                      onClick={() => setSelectedPost(post)}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h4 className="font-medium text-sm text-white line-clamp-2">{post.title}</h4>
-                          <div className="flex items-center space-x-2 mt-2">
-                            <Badge
-                              variant={post.status === "published" ? "default" : "secondary"}
-                              className={`text-xs ${
-                                post.status === "published"
-                                  ? "bg-green-600"
-                                  : post.status === "scheduled"
-                                    ? "bg-yellow-600"
-                                    : "bg-gray-600"
-                              }`}
-                            >
-                              {post.status}
-                            </Badge>
-                            {post.views > 0 && <span className="text-xs text-gray-400">{post.views} views</span>}
-                          </div>
-                          <p className="text-xs text-gray-500 mt-1">{post.date}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Main Editor Area */}
-          <div className="lg:col-span-3">
+          {/* Main Editor Area - Now full width */}
+          <div>
             <Tabs defaultValue="editor" className="space-y-6">
               <TabsList className="bg-gray-900 border border-gray-800">
                 <TabsTrigger value="editor" className="data-[state=active]:bg-gray-800">
@@ -336,41 +249,7 @@ export default function BlogGeneratorPage() {
                         </div>
                         <Separator orientation="vertical" className="h-6" />
                         <div className="flex items-center space-x-2">
-                          {generatedBlog && (
-                            <>
-                              <Button
-                                size="sm"
-                                variant="secondary"
-                                onClick={async () => {
-                                  const { error } = await supabase
-                                    .from('blog_posts')
-                                    .update({ title: generatedBlog.title, content: generatedBlog.content })
-                                    .eq('id', generatedBlog.id)
-                                  if (!error) {
-                                    alert('Saved')
-                                  }
-                                }}
-                              >
-                                <Save className="w-4 h-4 mr-1" /> Save
-                              </Button>
-                              <Button
-                                size="sm"
-                                className="bg-green-600 hover:bg-green-700"
-                                onClick={async () => {
-                                  const { error } = await supabase
-                                    .from('blog_posts')
-                                    .update({ status: 'published', title: generatedBlog.title, content: generatedBlog.content })
-                                    .eq('id', generatedBlog.id)
-                                  if (!error) {
-                                    alert('Published')
-                                    setGeneratedBlog({ ...generatedBlog, status: 'published' } as any)
-                                  }
-                                }}
-                              >
-                                <Send className="w-4 h-4 mr-1" /> Publish
-                              </Button>
-                            </>
-                          )}
+                          {/* Hidden: Save and Publish buttons - logic preserved but not rendered */}
                           <Button
                             variant={mobilePreview ? "outline" : "default"}
                             size="sm"
@@ -418,120 +297,35 @@ export default function BlogGeneratorPage() {
                         </div>
                       ) : (
                         <div
-                          className={`min-h-[400px] p-6 bg-white text-gray-900 rounded-lg ${mobilePreview ? "max-w-sm mx-auto" : ""}`}
+                          className={`min-h-[400px] p-6 bg-white text-gray-900 rounded-lg overflow-auto ${mobilePreview ? "max-w-sm mx-auto" : ""}`}
                         >
-                          <div className="prose prose-lg max-w-none">
-                            <h1>Welcome to AI Content Creation</h1>
-                            <p>
-                              This is where you can write your amazing blog post content. The editor supports markdown
-                              formatting and real-time preview.
-                            </p>
-                            <h2>Key Features</h2>
-                            <ul>
-                              <li>
-                                <strong>Rich text editing</strong> with formatting toolbar
-                              </li>
-                              <li>
-                                <strong>Live preview</strong> to see how your post will look
-                              </li>
-                              <li>
-                                <strong>Template selection</strong> for quick styling
-                              </li>
-                              <li>
-                                <strong>Mobile responsive</strong> preview
-                              </li>
-                              <li>
-                                <strong>SEO optimization</strong> tools
-                              </li>
-                            </ul>
-                            <p>Start writing and watch your content come to life!</p>
-                          </div>
+                          <style>{`
+                            .blog-preview h1 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: #111; }
+                            .blog-preview h2 { font-size: 1.5rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #222; }
+                            .blog-preview h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; color: #333; }
+                            .blog-preview p { color: #444; line-height: 1.75; margin-bottom: 1rem; }
+                            .blog-preview ul, .blog-preview ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+                            .blog-preview ul { list-style-type: disc; }
+                            .blog-preview ol { list-style-type: decimal; }
+                            .blog-preview li { margin-bottom: 0.5rem; color: #444; }
+                            .blog-preview strong, .blog-preview b { font-weight: 600; color: #111; }
+                            .blog-preview em, .blog-preview i { font-style: italic; }
+                            .blog-preview a { color: #2563eb; text-decoration: underline; }
+                            .blog-preview blockquote { border-left: 4px solid #e5e7eb; padding-left: 1rem; color: #666; font-style: italic; margin: 1rem 0; }
+                            .blog-preview code { background: #f3f4f6; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+                            .blog-preview pre { background: #1f2937; color: #f9fafb; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 1rem 0; }
+                          `}</style>
+                          <article className="blog-preview">
+                            {editorTitle && !editorContent.includes('<h1>') && (
+                              <h1>{editorTitle}</h1>
+                            )}
+                            <div dangerouslySetInnerHTML={{ __html: editorContent || '<p style="color: #999; font-style: italic;">Your blog content will appear here. Toggle to Preview mode to see rendered HTML.</p>' }} />
+                          </article>
                         </div>
                       )}
                     </div>
 
-                    {/* Publishing Controls */}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-800">
-                      <div className="flex items-center space-x-3">
-                        <Button variant="outline" className="border-gray-700 bg-transparent" onClick={async () => {
-                            if (!generatedBlog) return;
-                            let { error } = await supabase
-                              .from('blog_posts')
-                              .update({ title: generatedBlog.title, content: generatedBlog.content, status: 'draft' })
-                              .eq('id', generatedBlog.id);
-                            if (error) {
-                              // Retry with html_content fallback (older schema)
-                              const retry = await supabase
-                                .from('blog_posts')
-                                .update({ title: generatedBlog.title, html_content: generatedBlog.content, status: 'draft' })
-                                .eq('id', generatedBlog.id);
-                              error = retry.error;
-                            }
-                            if (!error) {
-                              alert('Draft saved successfully!');
-                            } else {
-                              console.error('Error saving draft', error);
-                              alert('Failed to save draft');
-                            }
-                          }}>
-                          <Save className="w-4 h-4 mr-2" />
-                          Save
-                        </Button>
-
-                      </div>
-                      <Button className="bg-blue-600 hover:bg-blue-700" onClick={async () => {
-                         if (!generatedBlog) return;
-                         let { data, error } = await supabase
-                           .from('blog_posts')
-                           .update({ title: generatedBlog.title, content: generatedBlog.content, status: 'published' })
-                           .eq('id', generatedBlog.id)
-                           .select('*')
-                           .single();
-                         if (error) {
-                           // retry with html_content column
-                           const retry = await supabase
-                             .from('blog_posts')
-                             .update({ title: generatedBlog.title, html_content: generatedBlog.content, status: 'published' })
-                             .eq('id', generatedBlog.id)
-                             .select('*')
-                             .single();
-                           data = retry.data as any;
-                           error = retry.error;
-                         }
-                         if (!error && data) {
-                           // Update local states to enable Visit Site button
-                           setSelectedPost({
-                             id: data.id,
-                             title: data.title,
-                             status: 'published',
-                             views: data.views ?? 0,
-                             date: data.created_at ? data.created_at.split('T')[0] : ''
-                           });
-                           alert('Blog published!');
-                           // Refresh lists
-                           const { data: refreshed } = await supabase
-                             .from('blog_posts')
-                             .select('*')
-                             .order('created_at', { ascending: false });
-                           if (refreshed) {
-                             const formatted = (refreshed as any[]).map((row) => ({
-                               id: row.id,
-                               title: row.title,
-                               status: row.status,
-                               views: row.views ?? 0,
-                               date: row.created_at ? row.created_at.split('T')[0] : ''
-                             }));
-                             setBlogPosts(formatted);
-                           }
-                         } else {
-                           console.error('Publish error', error);
-                           alert('Failed to publish');
-                         }
-                       }}>
-                         <Send className="w-4 h-4 mr-2" />
-                         Publish Now
-                       </Button>
-                    </div>
+                    {/* Hidden: Publishing Controls - Save and Publish buttons - logic preserved but not rendered */}
                   </CardContent>
                 </Card>
               </TabsContent>
